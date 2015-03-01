@@ -27,6 +27,16 @@ uploadProject( new Project().init({ name:"ObjectInit", downloads:1000000, tags:[
 
 It runs as a macro, so it's type safe.  In the example above, `new Project().init({ downloads:"not-a-number" })` would fail to compile, because of the incorrect type.
 
+### Naming conflicts
+
+If your object already has a method called `init()`, then you can use the `initObject` alias instead:
+
+    new Project().initObject({ ... });
+
+In the unlikely event that both names are taken, you could do:
+
+    ObjectInit.init( new Project(), { ... } );
+
 ### Installation
 
     haxelib install objectinit

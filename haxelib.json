@@ -5,8 +5,8 @@
   "tags": ["macro","syntax","sugar","util","helper","object","intialisation"],
   "description": "A simple macro to make initialising objects much easier: `new User().init({ name:'Jason', age:27, likes:['haxe','macros'] })`.  It's type safe!",
   "contributors": ["jason"],
-  "releasenote": "Initial release.",
-  "version": "1.0.0",
+  "releasenote": "Provide alternative if the `.init()` method already exists on the object you're initing.",
+  "version": "1.1.0",
   "url": "https://github.com/jasononeil/objectinit",
   "dependencies": {}
 }

@@ -27,6 +27,15 @@ using haxe.macro.ExprTools;
 **/
 class ObjectInit {
 	macro public static function init( expr:Expr, varsToSet:ExprOf<Dynamic<Dynamic>> ) {
+		return doTransformation( expr, varsToSet );
+	}
+
+	/** An alias for `init()`, in case you need to use it on an object which already has a method called `init()`. **/
+	macro public static function objectInit( expr:Expr, varsToSet:ExprOf<Dynamic<Dynamic>> ) {
+		return doTransformation( expr, varsToSet );
+	}
+
+	static function doTransformation( expr:Expr, varsToSet:ExprOf<Dynamic<Dynamic>> ) {
 		var lines:Array<Expr> = [];
 		lines.push( macro var __obj_init_tmp = $expr );
 		switch varsToSet.expr {
