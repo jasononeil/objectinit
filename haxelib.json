@@ -5,8 +5,8 @@
   "tags": ["macro","syntax","sugar","util","helper","object","intialisation"],
   "description": "A simple macro to make initialising objects much easier: `new User().init({ name:'Jason', age:27, likes:['haxe','macros'] })`.  It's type safe!",
   "contributors": ["jason"],
-  "releasenote": "Provide alternative if the `.init()` method already exists on the object you're initing.",
-  "version": "1.1.0",
+  "releasenote": "Add `objectInit()` and `initObject()` aliases. Fix for PHP. Allow `new Project().init([ name, downloads, tags ])` syntax when local variables share the same name as the target properties.",
+  "version": "1.2.0",
   "url": "https://github.com/jasononeil/objectinit",
   "dependencies": {}
 }
