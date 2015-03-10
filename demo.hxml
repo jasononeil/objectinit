@@ -1,0 +1,4 @@
+-cp src
+-cp demo
+-x Demo.hx
+

@@ -23,6 +23,13 @@ p.tags = ["macro","helper"];
 
 // You can even use it in a function call:
 uploadProject( new Project().init({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] }) );
+
+
+// If you have local variables with the same name as the target property, you can use an array to initialise:
+var name = "ObjectInit";
+var downloads = 1000000;
+var tags = ["macro","helper"];
+var p = new Project().init([ name, downloads, tags ]);
 ```
 
 It runs as a macro, so it's type safe.  In the example above, `new Project().init({ downloads:"not-a-number" })` would fail to compile, because of the incorrect type.
