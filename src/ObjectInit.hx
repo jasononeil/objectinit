@@ -33,21 +33,21 @@ using haxe.macro.ExprTools;
 **/
 class ObjectInit {
 	macro public static function init<T>( expr:ExprOf<T>, varsToSet:Expr ):ExprOf<T> {
-		return doTransformation( expr, varsToSet );
+		return doTransformation( expr, varsToSet, "init" );
 	}
 
 	/** An alias for `init()`, in case you need to use it on an object which already has a method called `init()`. **/
 	macro public static function objectInit<T>( expr:ExprOf<T>, varsToSet:Expr ):ExprOf<T> {
-		return doTransformation( expr, varsToSet );
+		return doTransformation( expr, varsToSet, "objectInit" );
 	}
 
 	/** An alias for `init()`, in case you need to use it on an object which already has a method called `init()`. **/
 	macro public static function initObject<T>( expr:ExprOf<T>, varsToSet:Expr ):ExprOf<T> {
-		return doTransformation( expr, varsToSet );
+		return doTransformation( expr, varsToSet, "initObject" );
 	}
 
 	#if macro
-		static function doTransformation<T>( expr:ExprOf<T>, varsToSet:Expr ):ExprOf<T> {
+		static function doTransformation<T>( expr:ExprOf<T>, varsToSet:Expr, fnName:String ):ExprOf<T> {
 			var lines:Array<Expr> = [];
 			lines.push( macro var __obj_init_tmp = $expr );
 			switch varsToSet.expr {
@@ -63,10 +63,10 @@ class ObjectInit {
 							case EConst(CIdent(varName)):
 								lines.push( macro __obj_init_tmp.$varName = $valExpr );
 							case other:
-								Context.error( 'Expected ${expr.toString()}.init() argument to be an array declaration containing only simple variable names: ', valExpr.pos );
+								Context.error( 'Expected $fnName() argument to be an array declaration containing only simple variable names, so "${valExpr.toString()}" is not supported', valExpr.pos );
 						}
 					}
-				case other: Context.error( 'Expected ${expr.toString()}.init() argument to be an object declaration { name: value } or an array declaration [ namedVal1, namedVal2 ]', expr.pos );
+				case other: Context.error( 'Expected $fnName() argument to be an object declaration { name: value } or an array declaration [ namedVal1, namedVal2 ]', expr.pos );
 			}
 			lines.push( macro __obj_init_tmp );
 			return { expr: EBlock(lines), pos: expr.pos };
