@@ -9,7 +9,7 @@ using haxe.macro.ExprTools;
 
 	```haxe
 	using ObjectInit;
-	
+
 	// Writing this:
 	var p = new Project().init({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] });
 
@@ -55,20 +55,20 @@ class ObjectInit {
 					for ( field in fields ) {
 						var varName = field.field;
 						var varValue = field.expr;
-						lines.push( macro __obj_init_tmp.$varName = $varValue );
+						lines.push( macro @:pos(field.expr.pos) __obj_init_tmp.$varName = $varValue );
 					}
 				case EArrayDecl(values):
 					for ( valExpr in values ) {
 						switch valExpr.expr {
 							case EConst(CIdent(varName)):
-								lines.push( macro __obj_init_tmp.$varName = $valExpr );
+								lines.push( macro @:pos(valExpr.pos) __obj_init_tmp.$varName = $valExpr );
 							case other:
 								Context.error( 'Expected $fnName() argument to be an array declaration containing only simple variable names, so "${valExpr.toString()}" is not supported', valExpr.pos );
 						}
 					}
 				case other: Context.error( 'Expected $fnName() argument to be an object declaration { name: value } or an array declaration [ namedVal1, namedVal2 ]', expr.pos );
 			}
-			lines.push( macro __obj_init_tmp );
+			lines.push( macro @:pos(expr.pos) __obj_init_tmp );
 			return { expr: EBlock(lines), pos: expr.pos };
 		}
 	#end
