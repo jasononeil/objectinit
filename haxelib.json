@@ -5,8 +5,8 @@
   "tags": ["macro","syntax","sugar","util","helper","object","intialisation"],
   "description": "A simple macro to make initialising objects much easier: `new User().init({ name:'Jason', age:27, likes:['haxe','macros'] })`.  It's type safe!",
   "contributors": ["jason"],
-  "releasenote": "Improved error positions, updated README to explain why quoted field names do not work.",
-  "version": "1.2.2",
+  "releasenote": "Support .init(a,b,c) and .init(a=1,b=2,c=3) syntax. See README for details.",
+  "version": "1.3.0",
   "url": "https://github.com/jasononeil/objectinit",
   "dependencies": {}
 }
