@@ -20,14 +20,28 @@ class Demo {
 		var name = "ObjectInit";
 		var downloads = 1000000;
 		var tags = ["macro","helper"];
-		var p = new Project().init([ name, downloads, tags ]);
+		var p = new Project().init( name, downloads, tags );
 		uploadProject( p );
 
-		// If your object has an init method, you can use one of these too:
-		var p = new Project().initObject({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] });
-		var p = new Project().objectInit({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] });
-		var p = new Project().initObject([ name, downloads, tags ]);
-		var p = new Project().objectInit([ name, downloads, tags ]);
+		// A different option is to use name=value expressions:
+		var projectName = "ObjectInit";
+		var count = 1000000;
+		var p = new Project().init( name=projectName, downloads=count, tags=["macro","helper"] );
+		uploadProject( p );
+
+		// Or a combination of all of the above:
+		var name = "ObjectInit";
+		var count = 1000000;
+		var p = new Project().init( name, downloads=count, { tags: ["macro","helper"]} );
+
+		// If your object has an `init()` method, you can use one of these aliases:
+		uploadProject( new Project().initObject({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] }) );
+		uploadProject( new Project().objectInit({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] }) );
+		uploadProject( new Project().initObject(name, downloads, tags) );
+		uploadProject( new Project().objectInit(name, downloads, tags) );
+
+		// We also support the old array based syntax.
+		uploadProject( new Project().objectInit([name, downloads, tags]) );
 	}
 
 	static function uploadProject( p:Project ) {

@@ -12,8 +12,9 @@ An example, using a pretend model `Project`:
 ```haxe
 using ObjectInit;
 
-// Writing this:
+// Writing one of these:
 var p = new Project().init({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] });
+var p = new Project().init( name="ObjectInit", downloads=1000000, tags=["macro","helper"] );
 
 // Is the same as writing:
 var p = new Project();
@@ -23,13 +24,18 @@ p.tags = ["macro","helper"];
 
 // You can even use it in a function call:
 uploadProject( new Project().init({ name:"ObjectInit", downloads:1000000, tags:["macro","helper"] }) );
+uploadProject( new Project().init(name="ObjectInit", downloads=1000000, tags=["macro","helper"]) );
 
-
-// If you have local variables with the same name as the target property, you can use an array to initialise:
+// If you have local variables with the same name as the target property, you can just use the variable name:
 var name = "ObjectInit";
 var downloads = 1000000;
 var tags = ["macro","helper"];
-var p = new Project().init([ name, downloads, tags ]);
+var p = new Project().init( name, downloads, tags );
+
+// Or like this:
+function addProject( name:String, downloads:Int, tags:Array<String> ) {
+	return new Project().init( name, downloads, tags ).save();
+}
 ```
 
 It runs as a macro, so it's type safe.  In the example above, `new Project().init({ downloads:"not-a-number" })` would fail to compile, because of the incorrect type.
@@ -52,11 +58,12 @@ See [Haxe Issue 2642](https://github.com/HaxeFoundation/haxe/issues/2642) for de
 
 ### Naming conflicts
 
-If your object already has a method called `init()`, then you can use the `initObject` alias instead:
+If your object already has a method called `init()`, then you can use the `initObject` or `objectInit` alias instead:
 
-    new Project().initObject({ ... });
+    new Project().initObject( ... );
+    new Project().objectInit( ... );
 
-In the unlikely event that both names are taken, you could do:
+In the unlikely event that all three names are taken, you could do:
 
     ObjectInit.init( new Project(), { ... } );
 
